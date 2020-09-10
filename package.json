@@ -34,7 +34,7 @@
     "endOfLine": "lf"
   },
   "scripts": {
-    "prepare": "tdi -q",
+    "prepare": "./compile && tdi -q",
     "compile": "./compile",
     "pretest": "./compile",
     "test": "./travis-test",
