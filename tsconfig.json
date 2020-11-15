@@ -14,7 +14,8 @@
     "module": "es6",
     "rootDir": "src",
     "outDir": "build",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "typings/private.d.ts",

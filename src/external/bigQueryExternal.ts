@@ -1,5 +1,5 @@
 import { PlywoodRequester } from 'plywood-base-api';
-import * as toArray from 'stream-to-array';
+import toArray from 'stream-to-array';
 import { AttributeInfo, Attributes } from '../datatypes';
 import { BigQueryDialect } from '../dialect/bigQueryDialect';
 import { PlyType } from '../types';

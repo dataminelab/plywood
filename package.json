@@ -42,6 +42,7 @@
   },
   "tonicExampleFilename": "docs/examples/tonic.js",
   "dependencies": {
+    "@google-cloud/bigquery": "^5.0.1",
     "chronoshift": "^0.9.4",
     "druid-query-toolkit": "^0.8.0",
     "druid.d.ts": "^0.12.1",
@@ -54,6 +55,8 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
+    "@types/readable-stream": "^2.3.9",
+    "@types/stream-to-array": "^2.3.0",
     "awesome-code-style": "^1.4.3",
     "chai": "4.2.0",
     "f-tool": "0.1.3",
@@ -67,6 +70,6 @@
     "plywood-postgres-requester": "1.4.0",
     "tdi": "0.6.5",
     "tslint": "5.18.0",
-    "typescript": "3.5.3"
+    "typescript": "^4.0.3"
   }
 }
