@@ -68,3 +68,5 @@ export class BigQueryExternal extends SQLExternal {
     ).then(BigQueryExternal.mapTypes);
   }
 }
+
+External.register(BigQueryExternal);

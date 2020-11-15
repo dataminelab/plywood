@@ -103,6 +103,7 @@ cat \
   build/external/postgresExternal.js \
   build/external/druidSqlExternal.js \
   build/external/druidExternal.js \
+  build/external/bigQueryExternal.js \
   build/executor/basicExecutor.js \
   extra/postfix.js \
   | grep -v '^import ' \
