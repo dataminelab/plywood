@@ -59,6 +59,10 @@ export class BigQueryDialect extends SQLDialect {
     YEAR: "EXTRACT(year from $$)",
   };
 
+  public escapeName(name: string): string {
+    name = name.replace(/`/g, '``');
+    return '`' + name + '`';
+  }
 
   public castExpression(inputType: PlyType, operand: string, cast: string): string {
     let castFunction = BigQueryDialect.CAST_TO_FUNCTION[cast][inputType];
