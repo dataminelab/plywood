@@ -67,7 +67,7 @@ export class BigQueryDialect extends SQLDialect {
   public castExpression(inputType: PlyType, operand: string, cast: string): string {
     let castFunction = BigQueryDialect.CAST_TO_FUNCTION[cast][inputType];
     if (!castFunction)
-      throw new Error(`unsupported cast from ${inputType} to ${cast} in MySQL dialect`);
+      throw new Error(`unsupported cast from ${inputType} to ${cast} in BigQuery dialect`);
     return castFunction.replace(/\$\$/g, operand);
   }
 
@@ -97,7 +97,7 @@ export class BigQueryDialect extends SQLDialect {
   public timePartExpression(operand: string, part: string, timezone: Timezone): string {
     // https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#extract
     let timePartFunction = BigQueryDialect.TIME_PART_TO_FUNCTION[part];
-    if (!timePartFunction) throw new Error(`unsupported part ${part} in Postgres dialect`);
+    if (!timePartFunction) throw new Error(`unsupported part ${part} in BigQuery dialect`);
     return timePartFunction.replace(/\$\$/g, this.utcToWalltime(operand, timezone));
   }
 

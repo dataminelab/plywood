@@ -31,9 +31,7 @@ export class BigQueryExternal extends SQLExternal {
           type = 'TIME';
         } else if (nativeType === 'string') {
           type = 'STRING';
-        } else if (nativeType === 'numeric' || nativeType === 'int64') {
-          type = 'NUMBER';
-        } else if (nativeType === 'float64') {
+        } else if (nativeType === 'numeric' || nativeType === 'int64' || nativeType === 'float64') {
           type = 'NUMBER';
         } else if (nativeType === 'bool') {
           type = 'BOOLEAN';
@@ -62,7 +60,7 @@ export class BigQueryExternal extends SQLExternal {
     return toArray(
       this.requester({
         query: `select column_name as name, data_type as type
-            from bigquery-public-data.baseball.INFORMATION_SCHEMA.COLUMNS
+            from INFORMATION_SCHEMA.COLUMNS
             WHERE table_name = ${this.dialect.escapeLiteral(this.source as string)} AND is_hidden = false`
       })
     ).then(BigQueryExternal.mapTypes);
