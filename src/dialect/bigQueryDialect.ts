@@ -28,26 +28,26 @@ export class BigQueryDialect extends SQLDialect {
   // TODO Complete the rest of functions
   static TIME_PART_TO_FUNCTION: Record<string, string> = {
     SECOND_OF_MINUTE: "extract(SECOND from $$)",
-    // SECOND_OF_HOUR: "(DATE_PART('minute',$$)*60+DATE_PART('second',$$))",
-    // SECOND_OF_DAY: "((DATE_PART('hour',$$)*60+DATE_PART('minute',$$))*60+DATE_PART('second',$$))",
-    // SECOND_OF_WEEK:
-    //   "((((CAST((DATE_PART('dow',$$)+6) AS int)%7)*24)+DATE_PART('hour',$$)*60+DATE_PART('minute',$$))*60+DATE_PART('second',$$))",
-    // SECOND_OF_MONTH:
-    //   "((((DATE_PART('day',$$)-1)*24)+DATE_PART('hour',$$)*60+DATE_PART('minute',$$))*60+DATE_PART('second',$$))",
-    // SECOND_OF_YEAR:
-    //   "((((DATE_PART('doy',$$)-1)*24)+DATE_PART('hour',$$)*60+DATE_PART('minute',$$))*60+DATE_PART('second',$$))",
+    SECOND_OF_HOUR: "(extract(MINUTE from $$)*60+extract(SECOND from $$))",
+    SECOND_OF_DAY: "((extract(HOUR from $$)*60+extract(MINUTE from $$))*60+extract(SECOND from $$))",
+    SECOND_OF_WEEK:
+      "(((mod((extract(DAYOFWEEK from $$)+6), 7)*24)+extract(HOUR from $$)*60+extract(MINUTE from $$))*60 + extract(SECOND from $$))",
+    SECOND_OF_MONTH:
+      "((((extract(DAY from $$)-1)*24)+extract(HOUR from $$)*60+extract(MINUTE from $$))*60+extract(SECOND from $$))",
+    SECOND_OF_YEAR:
+      "((((extract(DAYOFYEAR from $$)-1)*24)+extract(HOUR from $$)*60+extract(MINUTE from $$))*60+extract(SECOND from $$))",
     //
     MINUTE_OF_HOUR: "extract(MINUTE from $$)",
-    // MINUTE_OF_DAY: "DATE_PART('hour',$$)*60+DATE_PART('minute',$$)",
-    // MINUTE_OF_WEEK:
-    //   "((CAST((DATE_PART('dow',$$)+6) AS int)%7)*24)+DATE_PART('hour',$$)*60+DATE_PART('minute',$$)",
-    // MINUTE_OF_MONTH: "((DATE_PART('day',$$)-1)*24)+DATE_PART('hour',$$)*60+DATE_PART('minute',$$)",
-    // MINUTE_OF_YEAR: "((DATE_PART('doy',$$)-1)*24)+DATE_PART('hour',$$)*60+DATE_PART('minute',$$)",
+    MINUTE_OF_DAY: "extract(HOUR from $$)*60+extract(MINUTE from $$)",
+    MINUTE_OF_WEEK:
+      "(mod(extract(DAYOFWEEK from $$)+6, 7)*24)+extract(HOUR from $$)*60+extract(MINUTE from $$)",
+    MINUTE_OF_MONTH: "((extract(DAY from $$)-1)*24)+extract(HOUR from $$)*60+extract(MINUTE from $$)",
+    MINUTE_OF_YEAR: "((extract(DAYOFYEAR from $$)-1)*24)+extract(HOUR from $$)*60+extract(MINUTE from $$)",
     //
-    HOUR_OF_DAY: "EXTRACT(HOUR from $$)",
-    // HOUR_OF_WEEK: "((CAST((DATE_PART('dow',$$)+6) AS int)%7)*24+DATE_PART('hour',$$))",
-    // HOUR_OF_MONTH: "((DATE_PART('day',$$)-1)*24+DATE_PART('hour',$$))",
-    // HOUR_OF_YEAR: "((DATE_PART('doy',$$)-1)*24+DATE_PART('hour',$$))",
+    HOUR_OF_DAY: "extract(HOUR from $$)",
+    HOUR_OF_WEEK: "(mod((extract(DAYOFWEEK from $$) + 6), 7) * 24 + extract(HOUR from $$))",
+    HOUR_OF_MONTH: "((extract(DAY from $$)-1)*24+extract(HOUR from $$))",
+    HOUR_OF_YEAR: "((extract(DAYOFYEAR from $$)-1)*24+extract(HOUR from $$))",
     //
     DAY_OF_WEEK: "extract(DAYOFWEEK from $$)",
     DAY_OF_MONTH: "extract(DAY from $$)",
@@ -146,7 +146,7 @@ export class BigQueryDialect extends SQLDialect {
     }
     if (spans.second) {
       let expr = spans.second;
-      operand = sqlFn + operand + ", INTERVAL '" + expr + "' SECOND)";
+      operand = sqlFn + operand + ", INTERVAL " + expr + " SECOND)";
     }
     return operand;
   }
