@@ -16,6 +16,7 @@ fi
 
 PLYWOOD_PATH="build/plywood"
 node_modules/.bin/mocha \
+  test/dialect/* \
   test/datatypes/* \
   test/expression/* \
   test/external/* \
