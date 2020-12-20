@@ -4,8 +4,8 @@ import { SQLDialect } from './baseDialect';
 
 export class BigQueryDialect extends SQLDialect {
   static TIME_BUCKETING: Record<string, string> = {
-    PT1S: '%Y-%m-%d %H:%i:%SZ',
-    PT1M: '%Y-%m-%d %H:%i:00Z',
+    PT1S: '%Y-%m-%d %H:%M:%SZ',
+    PT1M: '%Y-%m-%d %H:%M:00Z',
     PT1H: '%Y-%m-%d %H:00:00Z',
     P1D: '%Y-%m-%d 00:00:00Z',
     P1M: '%Y-%m-01 00:00:00Z',
@@ -85,11 +85,11 @@ export class BigQueryDialect extends SQLDialect {
     return this.timeFloorExpression(operand, duration, timezone);
   }
 
-  timeFloorExpression(operand: string, duration: Duration, timezone: Timezone): string {
+  public timeFloorExpression(operand: string, duration: Duration, timezone: Timezone): string {
     let bucketFormat = BigQueryDialect.TIME_BUCKETING[duration.toString()];
     if (!bucketFormat) throw new Error(`unsupported duration '${duration}'`);
     return this.walltimeToUTC(
-      `DATE_FORMAT(${this.utcToWalltime(operand, timezone)},'${bucketFormat}')`,
+      `FORMAT_DATE('${bucketFormat}', ${this.utcToWalltime(operand, timezone)})`,
       timezone,
     );
   }
