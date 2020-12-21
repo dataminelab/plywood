@@ -64,6 +64,10 @@ export class BigQueryDialect extends SQLDialect {
     return '`' + name + '`';
   }
 
+  public constantGroupBy(): string {
+    return "";
+  }
+
   public castExpression(inputType: PlyType, operand: string, cast: string): string {
     let castFunction = BigQueryDialect.CAST_TO_FUNCTION[cast][inputType];
     if (!castFunction)
