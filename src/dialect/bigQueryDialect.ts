@@ -93,7 +93,7 @@ export class BigQueryDialect extends SQLDialect {
     let bucketFormat = BigQueryDialect.TIME_BUCKETING[duration.toString()];
     if (!bucketFormat) throw new Error(`unsupported duration '${duration}'`);
     return this.walltimeToUTC(
-      `FORMAT_DATE('${bucketFormat}', ${this.utcToWalltime(operand, timezone)})`,
+      `FORMAT_DATETIME('${bucketFormat}', CAST(${this.utcToWalltime(operand, timezone)} AS DATETIME))`,
       timezone,
     );
   }
@@ -115,8 +115,15 @@ export class BigQueryDialect extends SQLDialect {
   }
 
 
-  concatExpression(a: string, b: string): string {
+  public concatExpression(a: string, b: string): string {
     return `CONCAT(${a},${b})`;
+  }
+
+  public isNotDistinctFromExpression(a: string, b: string): string {
+    const nullConst = this.nullConstant();
+    if (a === nullConst) return `${b} IS ${nullConst}`;
+    if (b === nullConst) return `${a} IS ${nullConst}`;
+    return `(${a}=${b})`;
   }
 
   timeShiftExpression(operand: string, duration: Duration, step: int, timezone: Timezone): string {
