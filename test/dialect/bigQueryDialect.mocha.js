@@ -35,6 +35,6 @@ describe('BigQueryDialect', () => {
 
   it('should format timestamp', () => {
     let expression = dialect.timeBucketExpression('2015-09-12 00:48:02Z', Duration.fromJS('PT1S'), new Timezone('UTC'));
-    expect(expression).to.be.equal("FORMAT_DATE('%Y-%m-%d %H:%i:%SZ', 2015-09-12 00:48:02Z)");
+    expect(expression).to.be.equal("FORMAT_DATETIME('%Y-%m-%d %H:%M:%SZ', CAST(2015-09-12 00:48:02Z AS DATETIME))");
   });
 });
