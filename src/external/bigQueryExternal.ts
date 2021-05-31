@@ -6,7 +6,7 @@ import { PlyType } from '../types';
 import { External, ExternalJS, ExternalValue } from './baseExternal';
 import { SQLExternal } from './sqlExternal';
 
-interface BigQueryColumn {
+export interface BigQueryColumn {
   name: string;
   type: string;
 }
