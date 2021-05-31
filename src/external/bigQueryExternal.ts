@@ -27,11 +27,12 @@ export class BigQueryExternal extends SQLExternal {
         let name = column.name;
         let type: PlyType;
         let nativeType = column.type.toLowerCase();
-        if (nativeType === 'date' || nativeType === 'datetime') {
+        if (nativeType === 'date' || nativeType === 'datetime' || nativeType === 'timestamp') {
           type = 'TIME';
         } else if (nativeType === 'string') {
           type = 'STRING';
-        } else if (nativeType === 'numeric' || nativeType === 'int64' || nativeType === 'float64') {
+        } else if (nativeType === 'numeric' || nativeType === 'int64' || nativeType === 'float64' 
+                  || nativeType === 'integer' || nativeType === 'float' || nativeType === 'bignumeric') {
           type = 'NUMBER';
         } else if (nativeType === 'bool') {
           type = 'BOOLEAN';
