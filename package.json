@@ -34,7 +34,7 @@
     "endOfLine": "lf"
   },
   "scripts": {
-    "compile": "tsc -p .",
+    "compile": "tsc -p ."
   },
   "tonicExampleFilename": "docs/examples/tonic.js",
   "dependencies": {
