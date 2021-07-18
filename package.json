@@ -35,7 +35,7 @@
   },
   "scripts": {
     "prepare": "./compile && tdi -q",
-    "compile": "./compile",
+    "compile": "tsc -p .",
     "pretest": "./compile",
     "test": "./travis-test",
     "full-test": "./run-tests"
