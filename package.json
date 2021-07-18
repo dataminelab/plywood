@@ -34,7 +34,11 @@
     "endOfLine": "lf"
   },
   "scripts": {
-    "compile": "tsc -p ."
+    "prepare": "./compile && tdi -q",
+    "compile": "./compile",
+    "pretest": "./compile",
+    "test": "./travis-test",
+    "full-test": "./run-tests"
   },
   "tonicExampleFilename": "docs/examples/tonic.js",
   "dependencies": {
