@@ -46,7 +46,7 @@ export class PostgresExternal extends SQLExternal {
         let nativeType = column.sqlType.toLowerCase();
         if (nativeType.indexOf('timestamp') !== -1) {
           type = 'TIME';
-        } else if (nativeType === 'character varying') {
+        } else if (nativeType === 'character varying' || nativeType === 'text') {
           type = 'STRING';
         } else if (nativeType === 'integer' || nativeType === 'bigint') {
           // ToDo: make something special for integers
