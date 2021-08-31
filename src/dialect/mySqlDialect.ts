@@ -176,4 +176,9 @@ export class MySQLDialect extends SQLDialect {
   public indexOfExpression(str: string, substr: string): string {
     return `LOCATE(${substr}, ${str}) - 1`;
   }
+
+
+  constantGroupBy(): string {
+    return "";
+  }
 }

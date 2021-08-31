@@ -58,6 +58,7 @@ export class BigQueryExternal extends SQLExternal {
   }
 
   protected getIntrospectAttributes(): Promise<Attributes> {
+    // NB: introspection is done in redash
     return toArray(
       this.requester({
         query: `select column_name as name, data_type as type
