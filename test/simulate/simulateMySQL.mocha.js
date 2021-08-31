@@ -95,7 +95,7 @@ describe('simulate MySQL', () => {
       SUM(CASE WHEN (\`cut\`<=>"good") THEN \`price\` ELSE 0 END) AS \`PriceGoodCut\`
       FROM \`diamonds\` AS t
       WHERE (\`color\`<=>"D")
-      GROUP BY ''
+
     `,
     ]);
 
@@ -158,7 +158,7 @@ describe('simulate MySQL', () => {
       SELECT
       COUNT(*) AS \`__VALUE__\`
       FROM \`diamonds\` AS t
-      GROUP BY ''
+
     `,
     ]);
 
@@ -278,7 +278,7 @@ describe('simulate MySQL', () => {
       SUM(\`price\`) AS \`__VALUE__\`
       FROM \`diamonds\` AS t
       WHERE (\`color\`<=>"D")
-      GROUP BY ''
+
     `,
     ]);
   });
