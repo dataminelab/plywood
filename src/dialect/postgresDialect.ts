@@ -82,7 +82,7 @@ export class PostgresDialect extends SQLDialect {
   }
 
   public constantGroupBy(): string {
-    return "GROUP BY ''=''";
+    return "";
   }
 
   public timeToSQL(date: Date): string {
