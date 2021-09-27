@@ -1,6 +1,6 @@
 {
   "name": "plywood",
-  "version": "0.22.2",
+  "version": "0.22.3",
   "description": "A query planner and executor",
   "keywords": [
     "split",
@@ -16,7 +16,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "http://github.com/implydata/plywood.git"
+    "url": "http://github.com/dataminelab/plywood.git"
   },
   "main": "build/plywood.js",
   "typings": "build/index.d.ts",
