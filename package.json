@@ -1,6 +1,6 @@
 {
-  "name": "plywood",
-  "version": "0.22.2",
+  "name": "datareporter-plywood",
+  "version": "0.22.4",
   "description": "A query planner and executor",
   "keywords": [
     "split",
