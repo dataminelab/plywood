@@ -21,3 +21,4 @@ export * from './postgresExternal';
 export * from './utils/druidTypes';
 export * from './druidExternal';
 export * from './bigQueryExternal';
+export * from './awsAthenaExternal';
