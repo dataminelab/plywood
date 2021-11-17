@@ -87,7 +87,7 @@ export class AwsAthenaDialect extends SQLDialect {
     let bucketFormat = AwsAthenaDialect.TIME_BUCKETING[duration.toString()];
     if (!bucketFormat) throw new Error(`unsupported duration '${duration}'`);
     return this.walltimeToUTC(
-      `FORMAT_DATETIME(${this.utcToWalltime(operand, timezone)}, '${bucketFormat}')`,
+      `DATE_FORMAT(${this.utcToWalltime(operand, timezone)}, '${bucketFormat}')`,
       timezone,
     );
   }
