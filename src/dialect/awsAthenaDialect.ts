@@ -9,7 +9,8 @@ export class AwsAthenaDialect extends SQLDialect {
     PT1H: '%Y-%m-%d %H:00:00Z',
     P1D: '%Y-%m-%d 00:00:00Z',
     P1M: '%Y-%m-01 00:00:00Z',
-    P1Y: '%Y-01-01 00:00:00Z'
+    P1Y: '%Y-01-01 00:00:00Z',
+    P1W: '%Y-%m-%d 00:00:00Z',
   };
 
   // Format: {fromType: {toType: 'expression'}}
@@ -86,6 +87,13 @@ export class AwsAthenaDialect extends SQLDialect {
   public timeFloorExpression(operand: string, duration: Duration, timezone: Timezone): string {
     let bucketFormat = AwsAthenaDialect.TIME_BUCKETING[duration.toString()];
     if (!bucketFormat) throw new Error(`unsupported duration '${duration}'`);
+    if (duration.toString() == "P1W") {
+      return this.walltimeToUTC(
+        `DATE_FORMAT( 
+          DATE_TRUNC('week', ${this.utcToWalltime(operand, timezone)}), 
+        '${bucketFormat}')`, timezone,
+      );
+    }
     return this.walltimeToUTC(
       `DATE_FORMAT(${this.utcToWalltime(operand, timezone)}, '${bucketFormat}')`,
       timezone,
