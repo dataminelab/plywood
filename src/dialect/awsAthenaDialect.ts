@@ -11,6 +11,7 @@ export class AwsAthenaDialect extends SQLDialect {
     P1M: '%Y-%m-01 00:00:00Z',
     P1Y: '%Y-01-01 00:00:00Z',
     P1W: '%Y-%m-%d 00:00:00Z',
+    P3M: '%Y-%m-%d 00:00:00Z',
   };
 
   // Format: {fromType: {toType: 'expression'}}
@@ -89,15 +90,18 @@ export class AwsAthenaDialect extends SQLDialect {
     if (!bucketFormat) throw new Error(`unsupported duration '${duration}'`);
     if (duration.toString() == "P1W") {
       return this.walltimeToUTC(
-        `DATE_FORMAT( 
-          DATE_TRUNC('week', ${this.utcToWalltime(operand, timezone)}), 
-        '${bucketFormat}')`, timezone,
+        `DATE_FORMAT( DATE_TRUNC('week', ${this.utcToWalltime(operand, timezone)}), '${bucketFormat}')`, timezone,
+      );
+    } else if (duration.toString() == "P3M") {
+      return this.walltimeToUTC(
+        `DATE_FORMAT( DATE_TRUNC('quarter', ${this.utcToWalltime(operand, timezone)}), '${bucketFormat}')`, timezone,
+      );
+    } else {
+      return this.walltimeToUTC(
+        `DATE_FORMAT(${this.utcToWalltime(operand, timezone)}, '${bucketFormat}')`,
+        timezone,
       );
     }
-    return this.walltimeToUTC(
-      `DATE_FORMAT(${this.utcToWalltime(operand, timezone)}, '${bucketFormat}')`,
-      timezone,
-    );
   }
 
   public timePartExpression(operand: string, part: string, timezone: Timezone): string {
