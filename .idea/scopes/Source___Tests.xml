@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Source + Tests" pattern="file[plywood]:src//*||file[plywood]:test//*" />
-</component>
