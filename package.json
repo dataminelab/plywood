@@ -1,6 +1,6 @@
 {
-  "name": "@datareporter/plywood",
-  "version": "0.23.13",
+  "name": "datareporter-plywood",
+  "version": "0.23.6",
   "description": "A query planner and executor",
   "keywords": [
     "split",
@@ -9,10 +9,14 @@
     "druid",
     "query planner"
   ],
+  "author": {
+    "name": "Vadim Ogievetsky",
+    "url": "http://vadim.ogievetsky.com"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/implydata/plywood.git"
+    "url": "http://github.com/implydata/plywood.git"
   },
   "main": "build/plywood.js",
   "typings": "build/index.d.ts",
@@ -68,13 +72,5 @@
     "tdi": "0.6.5",
     "tslint": "5.18.0",
     "typescript": "^4.0.3"
-  },
-  "bugs": {
-    "url": "https://github.com/implydata/plywood/issues"
-  },
-  "homepage": "https://github.com/implydata/plywood#readme",
-  "directories": {
-    "doc": "docs",
-    "test": "test"
   }
 }
