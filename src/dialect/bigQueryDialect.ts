@@ -9,7 +9,9 @@ export class BigQueryDialect extends SQLDialect {
     PT1H: '%Y-%m-%d %H:00:00Z',
     P1D: '%Y-%m-%d 00:00:00Z',
     P1M: '%Y-%m-01 00:00:00Z',
-    P1Y: '%Y-01-01 00:00:00Z'
+    P1Y: '%Y-01-01 00:00:00Z',
+    P1W: '%Y-%m-%d 00:00:00Z',
+    P3M: '%Y-%m-%d 00:00:00Z',
   };
 
   static CAST_TO_FUNCTION: Record<string, Record<string, string>> = {
@@ -92,10 +94,37 @@ export class BigQueryDialect extends SQLDialect {
   public timeFloorExpression(operand: string, duration: Duration, timezone: Timezone): string {
     let bucketFormat = BigQueryDialect.TIME_BUCKETING[duration.toString()];
     if (!bucketFormat) throw new Error(`unsupported duration '${duration}'`);
-    return this.walltimeToUTC(
-      `FORMAT_DATETIME('${bucketFormat}', CAST(${this.utcToWalltime(operand, timezone)} AS DATETIME))`,
-      timezone,
-    );
+    console.log("timeFloorExpression", operand, duration, timezone);
+    console.log("bucketFormat", bucketFormat);
+    
+    if (duration.toString() == "P1W") {
+      return `FORMAT_TIMESTAMP('${bucketFormat}', TIMESTAMP_SUB(${operand}, INTERVAL EXTRACT(DAYOFWEEK from ${operand})-1 DAY))`;
+      return this.walltimeToUTC(
+        `FORMAT_DATETIME( 
+          '${bucketFormat}', 
+          CAST(
+            DATE_TRUNC(${this.utcToWalltime(operand, timezone)}, WEEK) AS DATETIME
+          )
+        )`,
+        timezone,
+      );
+    }  else if (duration.toString() == "P3M") {
+      return `FORMAT_TIMESTAMP('${bucketFormat}', TIMESTAMP_SUB(${operand}, INTERVAL EXTRACT(DAY from ${operand})-1 DAY))`;
+      return this.walltimeToUTC(
+        `FORMAT_DATETIME( 
+          '${bucketFormat}', 
+          CAST(
+            DATE_TRUNC(${this.utcToWalltime(operand, timezone)}, QUARTER) AS DATETIME
+          )
+        )`,
+        timezone,
+      );
+    } else {
+      return this.walltimeToUTC(
+        `FORMAT_DATETIME('${bucketFormat}', CAST(${this.utcToWalltime(operand, timezone)} AS DATETIME))`,
+        timezone,
+      );
+    }
   }
 
   public timePartExpression(operand: string, part: string, timezone: Timezone): string {
